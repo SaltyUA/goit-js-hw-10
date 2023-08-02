@@ -1,17 +1,29 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
 
 img {
-    width: auto;
-    height: 100%;
+    display: block;
+        max-width: 100%;
+        height: auto;
+        width: 640px;
 }
 
-.breed-name {
-    text-shadow: 1px black;
+.container {
+    padding: 10px 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
-.breed-desc {}
+.cat-info {
+    display: flex;
+    gap: 10px;
+}
 
-.breed-temp {}
+.breed-info {
+    width: 500px;
+    flex-shrink: 2;
+}
 
 .isHidden {
     position: absolute;
