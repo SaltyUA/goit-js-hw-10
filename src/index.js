@@ -1,6 +1,8 @@
 import { fetchBreeds } from './js/cat-api';
 import { fetchCatByBreed } from './js/cat-api';
 import Notiflix from 'notiflix';
+import SlimSelect from 'slim-select';
+import 'slim-select/dist/slimselect.css';
 
 const elements = {
   catInfo: document.querySelector(`.cat-info`),
@@ -12,9 +14,19 @@ const elements = {
 elements.select.classList.add(`isHidden`);
 
 fetchBreeds()
-  .then(() => {
+  .then(catsArr => {
+    const catsListArr = catsArr.map(breed => {
+      return `<option value='${breed.id}'>${breed.name}</option>`;
+    });
+    const selectTemplate = `${catsListArr.join(``)}`;
+    elements.select.insertAdjacentHTML(`beforeend`, selectTemplate);
+
     elements.loader.classList.add(`isHidden`);
     elements.select.classList.remove(`isHidden`);
+
+    new SlimSelect({
+      select: `#slim-select`,
+    });
   })
   .catch(error => {
     console.warn(error);
@@ -31,6 +43,10 @@ function setHtml() {
   elements.loader.classList.remove(`isHidden`);
   fetchCatByBreed(elements.select.value)
     .then(cat => {
+      if (cat.length === 0) {
+        throw error;
+      }
+
       elements.loader.classList.add(`isHidden`);
 
       let markup;
